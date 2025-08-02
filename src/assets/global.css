@@ -340,3 +340,107 @@ footer {
   align-items: center;
   gap: 0.5rem;
 }
+
+#espaco-escrita {
+  background-color: var(--background-color);
+  padding: 1rem 0;
+}
+
+.container-escrita {
+  max-width: 1200px;
+  margin: auto;
+  display: flex;
+  height: 70vh;
+  background-color: var(--container-bg);
+  border-radius: 8px;
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.07);
+  overflow: hidden;
+}
+
+.sidebar-escrita {
+  width: 300px;
+  border-right: 1px solid var(--background-color);
+  display: flex;
+  flex-direction: column;
+}
+
+.botao-nova-anotacao {
+  width: calc(100% - 2rem);
+  margin: 1rem;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+.lista-anotacoes {
+  overflow-y: auto;
+  flex-grow: 1;
+}
+
+.item-anotacao {
+  padding: 1rem;
+  cursor: pointer;
+  border-bottom: 1px solid var(--background-color);
+  transition: background-color 0.2s ease;
+}
+
+.item-anotacao:hover {
+  background-color: var(--background-color);
+}
+
+.item-anotacao.active {
+  background-color: var(--secondary-color);
+  color: white;
+}
+
+.item-titulo {
+  display: block;
+  font-weight: 700;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.item-preview {
+  font-size: 0.8rem;
+  opacity: 0.7;
+}
+
+.editor-principal {
+  flex-grow: 1;
+  display: flex;
+  flex-direction: column;
+}
+
+.editor-principal textarea {
+  width: 100%;
+  height: 100%;
+  border: none;
+  padding: 2rem;
+  font-size: 1.2rem;
+  line-height: 1.7;
+  font-family: var(--font-special);
+  background-color: var(--container-bg);
+  color: var(--text-color);
+  resize: none;
+}
+
+.editor-principal textarea:focus {
+  outline: none;
+}
+
+.sem-anotacao-selecionada {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  height: 100%;
+  color: var(--text-color);
+  opacity: 0.5;
+}
+
+.sem-anotacao-selecionada p {
+  margin-top: 1rem;
+  font-size: 1.2rem;
+}

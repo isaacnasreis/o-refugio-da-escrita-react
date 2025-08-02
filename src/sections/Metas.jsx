@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from "react";
 import { FaFlagCheckered } from "react-icons/fa";
 
-const Metas = () => {
+const Metas = ({ currentWordCount }) => {
   const [inputValue, setInputValue] = useState("");
   const [dailyGoal, setDailyGoal] = useState(0);
 
@@ -32,7 +32,10 @@ const Metas = () => {
         <h2>
           <FaFlagCheckered aria-hidden="true" /> Sua Meta de Escrita Diária
         </h2>
-        <p>Defina uma meta de palavras para hoje e acompanhe seu progresso!</p>
+        <p>
+          Palavras escritas hoje na anotação ativa:{" "}
+          <strong>{currentWordCount}</strong>
+        </p>
         <div className="goal-tracker">
           <input
             type="number"

@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useCallback } from "react";
 
 import Header from "./components/Header";
 import Carta from "./sections/Carta";
@@ -8,6 +8,7 @@ import Metas from "./sections/Metas";
 import Recursos from "./sections/Recursos";
 import Footer from "./components/Footer";
 import Caderno from "./sections/Caderno";
+import EspacoEscrita from "./sections/EspacoEscrita";
 
 const prompts = [
   "Uma biblioteca onde os livros sussurram segredos para quem os lê.",
@@ -78,6 +79,52 @@ function App() {
     localStorage.setItem("savedPrompts", JSON.stringify(savedPrompts));
   }, [savedPrompts]);
 
+  const [entries, setEntries] = useState(() => {
+    const saved = localStorage.getItem("writingEntries");
+    return saved ? JSON.parse(saved) : [];
+  });
+  const [wordCount, setWordCount] = useState(0);
+  const [activeEntryId, setActiveEntryId] = useState(null);
+
+  useEffect(() => {
+    localStorage.setItem("writingEntries", JSON.stringify(entries));
+  }, [entries]);
+
+  const addEntry = () => {
+    const newEntry = {
+      id: Date.now(),
+      title: "Nova Anotação",
+      content: "",
+      createdAt: new Date().toISOString(),
+    };
+    setEntries([newEntry, ...entries]);
+    setActiveEntryId(newEntry.id);
+  };
+
+  const updateEntry = (updatedEntry) => {
+    const updatedEntries = entries.map((entry) => {
+      if (entry.id === updatedEntry.id) {
+        return updatedEntry;
+      }
+      return entry;
+    });
+    setEntries(updatedEntries);
+  };
+
+  const getActiveEntry = useCallback(() => {
+    return entries.find((entry) => entry.id === activeEntryId);
+  }, [entries, activeEntryId]);
+
+  useEffect(() => {
+    const activeEntry = getActiveEntry();
+    if (activeEntry && activeEntry.content) {
+      const words = activeEntry.content.trim().split(/\s+/).filter(Boolean);
+      setWordCount(words.length);
+    } else {
+      setWordCount(0);
+    }
+  }, [getActiveEntry]);
+
   return (
     <>
       <Header darkMode={darkMode} handleThemeChange={handleThemeChange} />
@@ -94,7 +141,14 @@ function App() {
           onRemovePrompt={removeSavedPrompt}
           onAddPrompt={addPrompt}
         />
-        <Metas />
+        <EspacoEscrita
+          entries={entries}
+          addEntry={addEntry}
+          activeEntry={getActiveEntry()}
+          setActiveEntryId={setActiveEntryId}
+          updateEntry={updateEntry}
+        />
+        <Metas currentWordCount={wordCount} />
         <Recursos />
       </main>
       <Footer />
