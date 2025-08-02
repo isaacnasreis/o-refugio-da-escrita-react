@@ -1,6 +1,8 @@
 import React, { useState, useEffect } from "react";
 
 import Header from "./components/Header";
+import Carta from "./sections/Carta";
+import Inspiracao from "./sections/Inspiracao";
 
 function App() {
   const [darkMode, setDarkMode] = useState(() => {
@@ -25,6 +27,10 @@ function App() {
   return (
     <>
       <Header darkMode={darkMode} handleThemeChange={handleThemeChange} />
+      <main>
+        <Carta />
+        <Inspiracao />
+      </main>
     </>
   );
 }

@@ -174,10 +174,10 @@ body.dark-mode #carta {
   border-left: 4px solid var(--quote-border);
   padding-left: 1.5rem;
   text-align: left;
+  margin-bottom: 1rem;
 }
 
-#inspiracao footer {
-  margin-top: 1rem;
+#inspiracao figcaption {
   font-size: 1rem;
   font-weight: 700;
   text-align: right;
