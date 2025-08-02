@@ -3,6 +3,8 @@ import React, { useState, useEffect } from "react";
 import Header from "./components/Header";
 import Carta from "./sections/Carta";
 import Inspiracao from "./sections/Inspiracao";
+import Desafio from "./sections/Desafio";
+import Metas from "./sections/Metas";
 
 function App() {
   const [darkMode, setDarkMode] = useState(() => {
@@ -30,6 +32,8 @@ function App() {
       <main>
         <Carta />
         <Inspiracao />
+        <Desafio />
+        <Metas />
       </main>
     </>
   );
