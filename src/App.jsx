@@ -111,6 +111,15 @@ function App() {
     setEntries(updatedEntries);
   };
 
+  const deleteEntry = (idToDelete) => {
+    const newEntries = entries.filter((entry) => entry.id !== idToDelete);
+    setEntries(newEntries);
+
+    if (activeEntryId === idToDelete) {
+      setActiveEntryId(null);
+    }
+  };
+
   const getActiveEntry = useCallback(() => {
     return entries.find((entry) => entry.id === activeEntryId);
   }, [entries, activeEntryId]);
@@ -147,6 +156,7 @@ function App() {
           activeEntry={getActiveEntry()}
           setActiveEntryId={setActiveEntryId}
           updateEntry={updateEntry}
+          deleteEntry={deleteEntry}
         />
         <Metas currentWordCount={wordCount} />
         <Recursos />

@@ -1,5 +1,5 @@
 import React from "react";
-import { FaPlus, FaBookOpen } from "react-icons/fa";
+import { FaPlus, FaBookOpen, FaTrash, FaDownload } from "react-icons/fa";
 
 const EspacoEscrita = ({
   entries,
@@ -7,12 +7,44 @@ const EspacoEscrita = ({
   activeEntry,
   setActiveEntryId,
   updateEntry,
+  deleteEntry,
 }) => {
   const onContentChange = (content) => {
     updateEntry({
       ...activeEntry,
       content: content,
     });
+  };
+
+  const handleDelete = (e, entryId) => {
+    e.stopPropagation();
+    deleteEntry(entryId);
+  };
+
+  const onEntryChange = (field, value) => {
+    updateEntry({
+      ...activeEntry,
+      [field]: value,
+    });
+  };
+
+  const handleExport = () => {
+    if (!activeEntry) return;
+
+    const blob = new Blob([activeEntry.content], {
+      type: "text/plain;charset=utf-8",
+    });
+    const url = URL.createObjectURL(blob);
+    const link = document.createElement("a");
+    link.href = url;
+    const fileName = `${activeEntry.title
+      .replace(/[^a-z0-9]/gi, "_")
+      .toLowerCase()}.txt`;
+    link.download = fileName;
+    document.body.appendChild(link);
+    link.click();
+    document.body.removeChild(link);
+    URL.revokeObjectURL(url);
   };
 
   return (
@@ -31,9 +63,17 @@ const EspacoEscrita = ({
                 }`}
                 onClick={() => setActiveEntryId(entry.id)}
               >
-                <strong className="item-titulo">
-                  {entry.title || "Nova Anotação"}
-                </strong>
+                <div className="item-header">
+                  <strong className="item-titulo">
+                    {entry.title || "Nova Anotação"}
+                  </strong>
+                  <button
+                    className="botao-deletar"
+                    onClick={(e) => handleDelete(e, entry.id)}
+                  >
+                    <FaTrash />
+                  </button>
+                </div>
                 <span className="item-preview">
                   {entry.content?.substring(0, 30) + "..." || "Nenhum conteúdo"}
                 </span>
@@ -45,9 +85,25 @@ const EspacoEscrita = ({
         <div className="editor-principal">
           {activeEntry ? (
             <>
+              <div className="editor-header">
+                <input
+                  type="text"
+                  className="editor-titulo"
+                  value={activeEntry.title}
+                  onChange={(e) => onEntryChange("title", e.target.value)}
+                  placeholder="Dê um título à sua anotação"
+                />
+                <button
+                  className="botao-exportar"
+                  onClick={handleExport}
+                  aria-label="Exportar anotação"
+                >
+                  <FaDownload /> Exportar
+                </button>
+              </div>
               <textarea
                 value={activeEntry.content}
-                onChange={(e) => onContentChange(e.target.value)}
+                onChange={(e) => onEntryChange("content", e.target.value)}
                 placeholder="Suas palavras têm poder. Comece a escrever aqui..."
                 aria-label="Editor de texto principal"
               ></textarea>
