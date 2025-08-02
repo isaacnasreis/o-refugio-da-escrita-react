@@ -5,6 +5,8 @@ import Carta from "./sections/Carta";
 import Inspiracao from "./sections/Inspiracao";
 import Desafio from "./sections/Desafio";
 import Metas from "./sections/Metas";
+import Recursos from "./sections/Recursos";
+import Footer from "./components/Footer";
 
 function App() {
   const [darkMode, setDarkMode] = useState(() => {
@@ -34,7 +36,9 @@ function App() {
         <Inspiracao />
         <Desafio />
         <Metas />
+        <Recursos />
       </main>
+      <Footer />
     </>
   );
 }
